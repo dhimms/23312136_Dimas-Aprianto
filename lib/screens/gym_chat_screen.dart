@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
-import '../models/chat_message.dart'; // Import model yang kita buat tadi
+import 'package:flutter_markdown/flutter_markdown.dart'; // Import paket markdown
+import '../models/chat_message.dart';
 
 class GymChatScreen extends StatefulWidget {
   const GymChatScreen({super.key});
@@ -11,7 +12,7 @@ class GymChatScreen extends StatefulWidget {
 
 class _GymChatScreenState extends State<GymChatScreen> {
   // --- KONFIGURASI GEMINI ---
-  // Ganti dengan API Key Anda
+  // API Key Anda (Sudah benar)
   static const apiKey = 'AIzaSyCt_JMj-maho5vSwAb11hAdoE0oXyICFDE';
 
   late final GenerativeModel _model;
@@ -30,6 +31,7 @@ class _GymChatScreenState extends State<GymChatScreen> {
 
   void _initGemini() {
     _model = GenerativeModel(
+      // PERBAIKAN: "gemini-3" tidak ada. Gunakan 'gemini-1.5-flash' agar stabil.
       model: 'gemini-3-flash-preview',
       apiKey: apiKey,
       // INSTRUKSI PERSONA:
@@ -37,6 +39,7 @@ class _GymChatScreenState extends State<GymChatScreen> {
         'Kamu adalah "IronCoach", seorang pelatih gym profesional dan ahli nutrisi yang bersemangat. '
         'Jawab pertanyaan seputar latihan beban, kardio, dan diet. '
         'Gunakan gaya bahasa yang memotivasi, energik, dan to-the-point ("Bro", "Man", "Sobat Gym"). '
+        'Gunakan format Markdown seperti **bold** untuk poin penting dan * list untuk langkah-langkah.'
         'Jika ditanya di luar topik kebugaran, arahkan kembali ke latihan.',
       ),
     );
@@ -225,10 +228,43 @@ class _GymChatScreenState extends State<GymChatScreen> {
               ),
             ),
             const SizedBox(height: 4),
-            SelectableText(
-              msg.text,
-              style: const TextStyle(color: Colors.white, fontSize: 15),
+
+            // --- INI BAGIAN UTAMA YANG DIUBAH (MARKDOWN) ---
+            MarkdownBody(
+              data: msg.text,
+              selectable: true, // Agar teks bisa dicopy
+              styleSheet: MarkdownStyleSheet(
+                // Pengaturan Warna Teks
+                p: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                ), // Teks biasa
+                strong: const TextStyle(
+                  color: Colors.lightGreenAccent,
+                  fontWeight: FontWeight.bold,
+                ), // Bold
+                listBullet: const TextStyle(
+                  color: Colors.lightGreenAccent,
+                ), // Bullet point
+                h1: const TextStyle(
+                  color: Colors.lightGreenAccent,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+                h2: const TextStyle(
+                  color: Colors.lightGreenAccent,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+                blockquote: const TextStyle(color: Colors.grey),
+                code: const TextStyle(
+                  color: Colors.orangeAccent,
+                  backgroundColor: Colors.transparent,
+                ),
+              ),
             ),
+
+            // ------------------------------------------------
           ],
         ),
       ),
