@@ -17,7 +17,7 @@ Aplikasi ini dirancang untuk membantu pengguna mendapatkan saran latihan, tips n
 
 ## 🛠️ Teknologi yang Digunakan
 * **Framework:** [Flutter](https://flutter.dev/) (Dart)
-* **AI Model:** Google Gemini API (`google_generative_ai`)
+* **AI Model:** Google Gemini API (`gemini-3-flash-preview`)
 * **Markdown Renderer:** `flutter_markdown`
 * **Icons:** Material & Cupertino Icons
 
@@ -56,7 +56,7 @@ Aplikasi ini dirancang untuk membantu pengguna mendapatkan saran latihan, tips n
 
 ## 👤 Identitas Pengembang
 **Nama:** Dimas Aprianto
-**NIM:** 23312136
+**NPM:** 23312136
 **Prodi:** Informatika
 
 ---
